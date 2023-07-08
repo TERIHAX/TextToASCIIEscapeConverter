@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>ASCII Escape Sequence Converter</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -8,14 +9,14 @@
     <style>
         body {
             background-color: #1e1e1e;
-			color: #ffffff;
+            color: #ffffff;
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
         }
 
         .container {
-			background-color: #1e1e1e;
+            background-color: #1e1e1e;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,42 +29,63 @@
             padding: 20px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            box-shadow: 0 0 20px rgba(50, 50, 50, 1);
         }
 
         h1 {
             text-align: center;
             margin-top: 0;
             color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             font-family: 'Poppins', sans-serif;
+            transition: text-shadow 0.3s ease;
+        }
+
+        h1:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
         .input-container {
-			background-color: #1e1e1e;
-			color: #ffffff;
+            background-color: #1e1e1e;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             margin-bottom: 20px;
         }
 
         .input-textarea {
-			background-color: #1e1e1e;
-			color: #ffffff;
+            border: none;
+            outline: none;
+            background-color: #1e1e1e;
+            color: #ffffff;
             height: 120px;
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            resize: none;
+            border-radius: 10px;
+            resize: vertical;
             font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-textarea:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
         .button-container {
-			display: flex;
-			justify-content: center;
-			margin-top: 10px;
-			gap: 8px;
-			padding-bottom: 20px;
-		}
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 8px;
+            padding-bottom: 20px;
+        }
 
         .button {
             background-color: #4285f4;
@@ -71,28 +93,40 @@
             border: none;
             padding: 10px 20px;
             font-size: 16px;
-            border-radius: 4px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-family: 'Poppins', sans-serif;			
-        }
-		
-        .button:hover {		
-            background-color: #3367d6;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(51, 103, 214, 0.1);
         }
 
-		.output-textarea {
-			background-color: #1e1e1e;
-			color: #ffffff;
-			height: 120px;
-			width: 100%; /* Set the width to 100% */
-			padding: 10px;
-			font-size: 16px;
-			border: 1px solid #cccccc;
-			border-radius: 4px;
-			resize: none;
-			font-family: 'JetBrains Mono', monospace;
-		}
+        .button:hover {
+            background-color: #3367d6;
+            box-shadow: 0 0 10px rgba(51, 103, 214, 1);
+        }
+
+        .output-textarea {
+            border: none;
+            outline: none;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            height: 120px;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            resize: vertical;
+            font-family: 'JetBrains Mono', monospace;
+            box-sizing: border-box;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .output-textarea:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+        }
     </style>
 </head>
 <body>
@@ -103,8 +137,9 @@
                 <textarea id="inputText" class="input-textarea" placeholder="Enter text here"></textarea>
             </div>
             <div class="button-container">
-                <button onclick="convertToEscapeSequence()" class="button">Encode</button>
-                <button onclick="decodeEscapeSequence()" class="button">Decode</button>
+                <button onclick="document.getElementById('outputText').value = convertToEscapeSequenceText(document.getElementById('inputText').value);" class="button">Encode</button>
+                <button onclick="document.getElementById('outputText').value = decodeEscapeSequenceText(document.getElementById('inputText').value);" class="button">Decode</button>
+                <button onclick="document.getElementById('outputText').value = `loadstring('${convertToEscapeSequenceText(document.getElementById('inputText').value)}')()`;" class="button">Encode With Lua Loadstring</button>
             </div>
             <div class="output-container">
                 <textarea id="outputText" class="output-textarea" placeholder="Encode/Decode first!" readonly></textarea>
@@ -113,34 +148,23 @@
     </div>
 
     <script type="text/javascript">
-        function convertToEscapeSequence() {
-            var input = document.getElementById("inputText").value;
-            var output = convertToEscapeSequenceText(input);
-            document.getElementById("outputText").value = output;
-        }
-
-        function decodeEscapeSequence() {
-            var input = document.getElementById("inputText").value;
-            var output = decodeEscapeSequenceText(input);
-            document.getElementById("outputText").value = output;
-        }
-
-        function convertToEscapeSequenceText(text) {
-            var output = "";
-            for (var i = 0; i < text.length; i++) {
-                var charCode = text.charCodeAt(i);
-                output += "\\" + charCode.toString(8);
+        function convertToEscapeSequenceText(text)
+        {
+            let output = "";
+            for (let i = 0; i < text.length; i++) {
+                output += "\\" + text.charCodeAt(i).toString(8);
             }
             return output;
         }
 
-        function decodeEscapeSequenceText(text) {
-            var output = "";
-            var matches = text.match(/\\(\d{1,3})/g);
-            if (matches) {
-                for (var i = 0; i < matches.length; i++) {
-                    var charCode = parseInt(matches[i].substring(1), 8);
-                    output += String.fromCharCode(charCode);
+        function decodeEscapeSequenceText(text)
+        {
+            let output = "";
+            const matches = text.match(/\\(\d{1,3})/g);
+            if (matches)
+            {
+                for (let i = 0; i < matches.length; i++) {
+                    output += String.fromCharCode(parseInt(matches[i].substring(1), 8));
                 }
             }
             return output;
