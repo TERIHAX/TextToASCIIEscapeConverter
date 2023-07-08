@@ -24,6 +24,7 @@
         }
 
         .content {
+            opacity: 0;
             max-width: 600px;
             background-color: #282828;
             padding: 20px;
@@ -31,10 +32,20 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             transition: box-shadow 0.3s ease;
+            animation: fadeIn 1s ease forwards;
         }
 
         .content:hover {
             box-shadow: 0 0 20px rgba(50, 50, 50, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         h1 {
@@ -69,14 +80,6 @@
             border-radius: 10px;
             resize: vertical;
             font-family: 'JetBrains Mono', monospace;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .input-textarea:hover {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
         .button-container {
@@ -96,13 +99,15 @@
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(51, 103, 214, 0.1);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
         }
 
         .button:hover {
             background-color: #3367d6;
             box-shadow: 0 0 10px rgba(51, 103, 214, 1);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
         .output-textarea {
@@ -118,14 +123,6 @@
             resize: vertical;
             font-family: 'JetBrains Mono', monospace;
             box-sizing: border-box;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .output-textarea:hover {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
     </style>
 </head>
